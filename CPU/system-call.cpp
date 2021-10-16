@@ -2,8 +2,8 @@
 #include <iostream>
 #include "time.h"
 
-void systemCall_overhead() {
-    unsigned long start, end;
+void system_call_overhead() {
+    uint64_t start, end;
     start = rdtsc_start();
     getpid();
     end = rdtsc_end();
@@ -15,5 +15,5 @@ int main() {
     // try to accelerate iostream
     std::ios_base::sync_with_stdio(false);
 
-    systemCall_overhead();
+    system_call_overhead();
 }

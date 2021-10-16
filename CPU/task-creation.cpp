@@ -3,14 +3,15 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <pthread.h>
+#include <stdint.h>
 #include <iostream>
 #include "time.h"
 #define TIMES 10000
 
-void processCreate_overhead() {
-    unsigned long start, end;
+void process_create_overhead() {
+    uint64_t start, end;
     start = rdtsc_start();
-    for (int i = 0; i < TIMES; ++i) {
+    for (uint64_t i = 0; i < TIMES; ++i) {
         pid_t pid = fork();
         if (pid == 0) {
             exit(0);
@@ -23,16 +24,16 @@ void processCreate_overhead() {
     << (double)(end - start) / (double)TIMES << " cycles." << std::endl;
 }
 
-void* runThread(void *) {
+void* run_thread(void *) {
     pthread_exit(NULL);
 }
 
-void threadCreate_overhead() {
+void thread_create_overhead() {
     pthread_t tidp;
-    unsigned long start, end;
+    uint64_t start, end;
     start = rdtsc_start();
-    for (int i = 0; i < TIMES; ++i) {
-        pthread_create(&tidp, NULL, runThread, NULL);
+    for (uint64_t i = 0; i < TIMES; ++i) {
+        pthread_create(&tidp, NULL, run_thread, NULL);
         pthread_join(tidp, NULL);
     }
     end = rdtsc_end();
@@ -44,7 +45,6 @@ int main() {
     // try to accelerate iostream
     std::ios_base::sync_with_stdio(false);
 
-    processCreate_overhead();
-    threadCreate_overhead();
-
+    process_create_overhead();
+    thread_create_overhead();
 }
