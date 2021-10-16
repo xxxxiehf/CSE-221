@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdint.h>
 #include <iostream>
 #include "time.h"
 
