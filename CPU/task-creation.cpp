@@ -24,16 +24,13 @@ void process_create_overhead() {
     << (double)(end - start) / (double)TIMES << " cycles." << std::endl;
 }
 
-void* run_thread(void *) {
-    pthread_exit(NULL);
-}
 
 void thread_create_overhead() {
     pthread_t tidp;
     uint64_t start, end;
     start = rdtsc_start();
     for (uint64_t i = 0; i < TIMES; ++i) {
-        pthread_create(&tidp, NULL, run_thread, NULL);
+        pthread_create(&tidp, NULL, [](void*) -> void*{pthread_exit(NULL); return NULL;}, NULL);
         pthread_join(tidp, NULL);
     }
     end = rdtsc_end();

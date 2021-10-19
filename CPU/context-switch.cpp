@@ -20,7 +20,7 @@ uint64_t single_process_switch_time() {
         read(fd[0], (void*)&end, sizeof(uint64_t));
     } else {
         end = rdtsc_end();
-        write(fd[1], (void*)&start, sizeof(uint64_t));
+        write(fd[1], (void*)&end, sizeof(uint64_t));
         exit(0);
     }
     close(fd[0]);
