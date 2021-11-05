@@ -1,32 +1,35 @@
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdint.h>
 #include <iostream>
 #include "time.h"
 #define TIMES 10000
 
 void reading_time_overhead() {
     double all_overhead = 0;
-    unsigned long start, end;
-    for (int i = 0;i < TIMES;i++) {
+    uint64_t start = 0, end = 0;
+    for (uint64_t i = 0; i < TIMES; i++) {
         start = rdtsc_start();
         end = rdtsc_end();
         all_overhead += (end - start);
     }
+    double overhead = all_overhead / (double)TIMES;
     std::cout << "The average overhead of reading in " 
         << TIMES << " cycles is " << all_overhead / (double)TIMES << std::endl;
 }
 
 void loop_overhead() {
-    unsigned long start = rdtsc_start();
-    for (int i = 0;i < 100000;i++) ;
-    unsigned long end = rdtsc_end();
+    uint64_t start = rdtsc_start();
+    for (uint64_t i = 0;i < 100000;i++) ;
+    uint64_t end = rdtsc_end();
     std::cout << "The average overhead time of one loop is "
         << (double)(end - start) / 100000 << " cycles." << std::endl;
 }
 
 void cpu_cycle() {
-    unsigned long start = rdtsc_start();
+    uint64_t start = rdtsc_start();
     sleep(10);
-    unsigned long end = rdtsc_end();
+    uint64_t end = rdtsc_end();
     std::cout << end - start << " cycles in 10 seconds" << std::endl;
 }
 
