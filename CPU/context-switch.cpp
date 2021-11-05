@@ -25,7 +25,8 @@ uint64_t single_process_switch_time() {
     }
     close(fd[0]);
     close(fd[1]);
-    diff = end - start;
+    if (end > start)
+        diff = end - start;
     return diff;
 }
 
