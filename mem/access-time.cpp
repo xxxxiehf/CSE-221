@@ -55,5 +55,5 @@ void ram_access_time(int array_size_len, int stride_len) {
 
 int main() {
     ios_base::sync_with_stdio(false);
-    ram_access_time(15, 11);
+    ram_access_time(15, 20);
 }
