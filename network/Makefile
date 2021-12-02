@@ -16,3 +16,4 @@ round-trip-client.o: round-trip-client.cpp
 round-trip-server.o: round-trip-server.cpp
 	g++ round-trip-server.cpp -o bin/round-trip-server -Wall -O0
 
+all: connection-client.o connection-server.o peak-bandwidth-client.o peak-bandwidth-server.o round-trip-client.o round-trip-server.o
