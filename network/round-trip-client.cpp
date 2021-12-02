@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>         // close()
+#include <unistd.h>    
 #include <errno.h>
-#include <netinet/in.h>     // sockaddr
-#include <arpa/inet.h>      // htons()
+#include <netinet/in.h>    
+#include <arpa/inet.h>      
 #include <sys/socket.h>
 #include <iostream>
 #include <string>
@@ -30,30 +30,23 @@ void socket_warm_up(int fd) {
     }
 }
 
-void print_errno(void) {
-    fprintf(stderr, "Value of errno: %d\n", errno);
-    perror("Error printed by perror");
-    fprintf(stderr, "Output by strerror: %s\n", strerror(errno));
-}
-
 void socket_tcp_ping(char ip[]) {
     uint64_t start, end, diff;
-    struct sockaddr_in echo_server_socket;
+    struct sockaddr_in server;
     int fd;
     uint64_t receive_size, total_bytes = 0;
-    memset(&echo_server_socket, 0, sizeof(echo_server_socket));
-    echo_server_socket.sin_family = AF_INET;
-    echo_server_socket.sin_addr.s_addr = inet_addr(ip);
-    echo_server_socket.sin_port = htons(SERVER_PORT);
+    memset(&server, 0, sizeof(server));
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = inet_addr(ip);
+    server.sin_port = htons(SERVER_PORT);
 
     if ((fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
         std::cerr << "Fail to create socket" << std::endl;
         close(fd);
         exit(EXIT_FAILURE);
     }
-    if (connect(fd, (struct sockaddr*)&echo_server_socket, sizeof(echo_server_socket)) < 0) {
+    if (connect(fd, (struct sockaddr*)&server, sizeof(server)) < 0) {
         std::cerr << "Fail to connect to socket" << std::endl;
-        print_errno();
         close(fd);
         exit(EXIT_FAILURE);
     }
@@ -83,6 +76,6 @@ void socket_tcp_ping(char ip[]) {
 }
 
 int main() {
-    char local_ip[] = "127.0.0.1";
+    char local_ip[] = "0.0.0.0";
     socket_tcp_ping(local_ip);
 }
