@@ -6,3 +6,6 @@ file-read.o: file-read.cpp
 
 contention.o: contention.cpp
 	g++ contention.cpp -o bin/contention -Wall -O0
+
+remote-file-read.o: remote-file-read.cpp
+	g++ remote-file-read.cpp -o bin/remote-file-read -Wall -O0
