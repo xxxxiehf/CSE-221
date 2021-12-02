@@ -12,7 +12,7 @@
 
 
 #define SERVER_PORT 8888
-
+#define BUFFER_SIZE 100
 
 int main()
 {
@@ -38,8 +38,9 @@ int main()
      
     std::cout << "Waiting for incoming connections..." << std::endl;
     int l = sizeof(struct sockaddr_in);
+    char buffer[BUFFER_SIZE];
     client_sock = accept(fd, (struct sockaddr *)&client, (socklen_t*)&l);
-     
+
     while (1)
     {
     	if (client_sock < 0) {
@@ -47,8 +48,7 @@ int main()
             close(fd);
             exit(EXIT_FAILURE);
     	}
-        char c = 'x';
-        recv(client_sock, &c, sizeof(c), 0);
-        send(client_sock, &c, sizeof(c), 0);
+        size_t recv_size = recv(client_sock, &buffer, sizeof(buffer), 0);
+        send(client_sock, &buffer, recv_size, 0);
     }
 }
