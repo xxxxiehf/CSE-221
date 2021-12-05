@@ -1,15 +1,15 @@
+#include "time.h"
 #include <iostream>
 #include <vector>
-#include "time.h"
 using namespace std;
 
 #define ACCESS_TIMES 10000
 #define REPEAT_TIMES 10
 
 void ram_access_time_instance(long array_size, long stride) {
-    // cout << "Ram access test with array size: " << array_size
-    //      << " and stride: " << stride << endl;
-    cout << array_size << "\t" << stride << "\t";
+    cout << "Ram access test with array size: " << array_size
+         << " and stride: " << stride << endl;
+    // cout << array_size << "\t" << stride << "\t";
     double total_cycles = 0;
     for (int time = 0; time < REPEAT_TIMES; time++) {
         // init an array
