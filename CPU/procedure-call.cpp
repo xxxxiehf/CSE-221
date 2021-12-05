@@ -1,5 +1,7 @@
 #include "time.h"
 #include <iostream>
+using namespace std;
+
 #define TIMES 100000
 
 static __attribute__((noinline)) void param_0() {}
@@ -22,9 +24,9 @@ void procedure_call_overhead() {
         end = rdtsc_end();
         sum += end - start;
     }
-    std::cout << "Function calling with 0 parameter takes "
-              << (double)sum / TIMES << std::endl;
-    
+    cout << "Function calling with 0 parameter takes " << (double)sum / TIMES
+         << endl;
+
     sum = 0;
     for (int i = 0; i < TIMES; i++) {
         start = rdtsc_start();
@@ -32,9 +34,9 @@ void procedure_call_overhead() {
         end = rdtsc_end();
         sum += end - start;
     }
-    std::cout << "Function calling with 1 parameter takes "
-              << (double)sum / TIMES << std::endl;
-    
+    cout << "Function calling with 1 parameter takes " << (double)sum / TIMES
+         << endl;
+
     sum = 0;
     for (int i = 0; i < TIMES; i++) {
         start = rdtsc_start();
@@ -42,8 +44,8 @@ void procedure_call_overhead() {
         end = rdtsc_end();
         sum += end - start;
     }
-    std::cout << "Function calling with 2 parameters takes "
-              << (double)sum / TIMES << std::endl;
+    cout << "Function calling with 2 parameters takes " << (double)sum / TIMES
+         << endl;
 
     sum = 0;
     for (int i = 0; i < TIMES; i++) {
@@ -52,8 +54,8 @@ void procedure_call_overhead() {
         end = rdtsc_end();
         sum += end - start;
     }
-    std::cout << "Function calling with 3 parameters takes "
-              << (double)sum / TIMES << std::endl;
+    cout << "Function calling with 3 parameters takes " << (double)sum / TIMES
+         << endl;
 
     sum = 0;
     for (int i = 0; i < TIMES; i++) {
@@ -62,8 +64,8 @@ void procedure_call_overhead() {
         end = rdtsc_end();
         sum += end - start;
     }
-    std::cout << "Function calling with 4 parameters takes "
-              << (double)sum / TIMES << std::endl;
+    cout << "Function calling with 4 parameters takes " << (double)sum / TIMES
+         << endl;
 
     sum = 0;
     for (int i = 0; i < TIMES; i++) {
@@ -72,9 +74,9 @@ void procedure_call_overhead() {
         end = rdtsc_end();
         sum += end - start;
     }
-    std::cout << "Function calling with 5 parameters takes "
-              << (double)sum / TIMES << std::endl;
-    
+    cout << "Function calling with 5 parameters takes " << (double)sum / TIMES
+         << endl;
+
     sum = 0;
     for (int i = 0; i < TIMES; i++) {
         start = rdtsc_start();
@@ -82,8 +84,8 @@ void procedure_call_overhead() {
         end = rdtsc_end();
         sum += end - start;
     }
-    std::cout << "Function calling with 6 parameters takes "
-              << (double)sum / TIMES << std::endl;
+    cout << "Function calling with 6 parameters takes " << (double)sum / TIMES
+         << endl;
 
     sum = 0;
     for (int i = 0; i < TIMES; i++) {
@@ -92,14 +94,15 @@ void procedure_call_overhead() {
         end = rdtsc_end();
         sum += end - start;
     }
-    std::cout << "Function calling with 7 parameters takes "
-              << (double)sum / TIMES << std::endl;
+    cout << "Function calling with 7 parameters takes " << (double)sum / TIMES
+         << endl;
 }
 
 int main() {
     // try to accelerate iostream
-    std::ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
-    procedure_call_overhead();
+    for (int i = 0; i < 10; i++)
+        procedure_call_overhead();
     return 0;
 }
