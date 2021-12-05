@@ -1,14 +1,15 @@
+#include "time.h"
+#include <arpa/inet.h>
+#include <errno.h>
+#include <iostream>
+#include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>    
-#include <errno.h>
-#include <netinet/in.h>    
-#include <arpa/inet.h>      
-#include <sys/socket.h>
-#include <iostream>
 #include <string>
-#include "time.h"
+#include <sys/socket.h>
+#include <unistd.h>
+using namespace std;
 
 #define SERVER_PORT 8888
 #define TCP_TEST_NUM 20
@@ -36,47 +37,50 @@ void socket_tcp_ping(char ip[]) {
     int fd;
     uint64_t receive_size, total_bytes = 0;
     memset(&server, 0, sizeof(server));
-    
+
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = inet_addr(ip);
     server.sin_port = htons(SERVER_PORT);
 
     if ((fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-        std::cerr << "Fail to create socket~" << std::endl;
+        cerr << "Fail to create socket~" << endl;
         close(fd);
         exit(EXIT_FAILURE);
     }
-    if (connect(fd, (struct sockaddr*)&server, sizeof(server)) < 0) {
-        std::cerr << "Fail to connect to socket~" << std::endl;
+    if (connect(fd, (struct sockaddr *)&server, sizeof(server)) < 0) {
+        cerr << "Fail to connect to socket~" << endl;
         close(fd);
         exit(EXIT_FAILURE);
     }
     socket_warm_up(fd);
 
     for (uint64_t i = START_SIZE; i <= MAX_SIZE; i += ITERATION) {
-        char send_buffer[i];
-        for (uint64_t k = 0; k < i; ++k) {
-            send_buffer[k] = 'x';
-        }
-        receive_size = i;
-        diff = 0;
-        char receive_buffer[i];
-        for (uint64_t k = 0; k < TCP_TEST_NUM; ++k) {
-            total_bytes = 0;
-            start = rdtsc_start();
-            send(fd, &send_buffer, i, 0);
-            while (total_bytes < receive_size) {
-                total_bytes += recv(fd, &receive_buffer, receive_size, 0);
+        for (int times = 0; times < 10; times++) {
+            char send_buffer[i];
+            for (uint64_t k = 0; k < i; ++k) {
+                send_buffer[k] = 'x';
             }
-            end = rdtsc_end();
-            diff += end - start;
+            receive_size = i;
+            diff = 0;
+            char receive_buffer[i];
+            for (uint64_t k = 0; k < TCP_TEST_NUM; ++k) {
+                total_bytes = 0;
+                start = rdtsc_start();
+                send(fd, &send_buffer, i, 0);
+                while (total_bytes < receive_size) {
+                    total_bytes += recv(fd, &receive_buffer, receive_size, 0);
+                }
+                end = rdtsc_end();
+                diff += end - start;
+            }
+            cout << ip << " send_size: " << i << " in "
+                 << (double)diff / (double)TCP_TEST_NUM << " cycles." << endl;
         }
-        std::cout << ip << " send_size: " << i << " in " << (double) diff / (double)TCP_TEST_NUM << " cycles." << std::endl;
     }
     close(fd);
 }
 
 int main() {
-    char local_ip[] = "0.0.0.0";
+    char local_ip[] = "127.0.0.1";
     socket_tcp_ping(local_ip);
 }

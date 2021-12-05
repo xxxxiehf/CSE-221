@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include "time.h"
+using namespace std;
 
 #define SERVER_PORT 8890
 #define TCP_TEST_NUM 20
@@ -19,7 +20,6 @@ void peak_bandwidth_client(char ip[]) {
     uint64_t start, end, diff;
     struct sockaddr_in server;
     int fd;
-    uint64_t receive_size, total_bytes = 0;
     memset(&server, 0, sizeof(server));
     
     server.sin_family = AF_INET;
@@ -32,7 +32,7 @@ void peak_bandwidth_client(char ip[]) {
     }
     for (uint64_t k = 0; k < TCP_TEST_NUM; ++k) {
         if ((fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-            std::cerr << "Fail to create socket~" << std::endl;
+            cerr << "Fail to create socket~" << endl;
             close(fd);
             exit(EXIT_FAILURE);
         }
@@ -40,15 +40,13 @@ void peak_bandwidth_client(char ip[]) {
         int conn_res = connect(fd, (struct sockaddr*)&server, sizeof(server));
         end = rdtsc_end();
         diff = end - start;
-        std::cout << ip << " setup time: " << diff << std::endl;
+        cout << ip << " setup time: " << diff << endl;
         if (conn_res < 0) {
-            std::cerr << "Fail to connect to socket~" << std::endl;
+            cerr << "Fail to connect to socket~" << endl;
             close(fd);
             exit(EXIT_FAILURE);
         }
-        receive_size = SEND_DATA_SIZE;
         diff = 0;
-        total_bytes = 0;
         send(fd, &send_buffer, SEND_DATA_SIZE, 0);
     }
     delete []send_buffer;
@@ -56,6 +54,6 @@ void peak_bandwidth_client(char ip[]) {
 }
 
 int main() {
-    char local_ip[] = "0.0.0.0";
+    char local_ip[] = "127.0.0.1";
     peak_bandwidth_client(local_ip);
 }
