@@ -29,10 +29,10 @@ void seq_read(const char *file_name, off_t file_size) {
     }
     close(fd);
     free(buffer);
-    cout << (double)sum / (file_size / BLOCKSIZE) << endl;
-    // cout << "average cycles to sequentially read a block in size "
-    //      << file_size / 1024 / 1024 << "MB is "
-    //      << (double)sum / (file_size / BLOCKSIZE) << endl;
+    // cout << (double)sum / (file_size / BLOCKSIZE) << endl;
+    cout << "average cycles to sequentially read a block in size "
+         << file_size / 1024 / 1024 << "MB is "
+         << (double)sum / (file_size / BLOCKSIZE) << endl;
 }
 
 void ram_read(const char *file_name, off_t file_size) {
@@ -56,10 +56,10 @@ void ram_read(const char *file_name, off_t file_size) {
     }
     close(fd);
     free(buffer);
-    cout << (double)sum / (file_size / BLOCKSIZE) << endl;
-    // cout << "average cycles to randomly read a block in size "
-    //      << file_size / 1024 / 1024 << "MB is "
-    //      << (double)sum / (file_size / BLOCKSIZE) << endl;
+    // cout << (double)sum / (file_size / BLOCKSIZE) << endl;
+    cout << "average cycles to randomly read a block in size "
+         << file_size / 1024 / 1024 << "MB is "
+         << (double)sum / (file_size / BLOCKSIZE) << endl;
 }
 
 void file_read() {

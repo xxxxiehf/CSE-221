@@ -60,11 +60,11 @@ void file_cache_measurement() {
 
             close(fd);
             unlink(file_name.c_str());
-            cout << file_size / 1024 / 1024 / 1024 << "\t"
-                 << (double)sum / (double)block_number << endl;
-            // cout << "Average cycles for reading a 4k block for a " <<
-            // file_size / 1024 / 1024 / 1024 << "GB file is " << (double)sum /
-            // (double)count << endl;
+            // cout << file_size / 1024 / 1024 / 1024 << "\t"
+            //      << (double)sum / (double)block_number << endl;
+            cout << "Average cycles for reading a 4k block for a " <<
+            file_size / 1024 / 1024 / 1024 << " GB file is " << (double)sum /
+            (double)block_number << endl;
         }
     }
     free(buffer);

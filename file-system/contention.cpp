@@ -33,7 +33,9 @@ void read_file(int index) {
     }
     close(fd);
     free(buffer);
-    cout << (double)sum / (double)number_of_blocks << endl;
+    // cout << (double)sum / (double)number_of_blocks << endl;
+    cout << "It takes " << (double)sum / (double)number_of_blocks 
+         << " cycles to read a 4K block." << endl;
 }
 
 // create given number of process
@@ -69,12 +71,11 @@ int main() {
 
     // test with different number of process
     for (int i = 1; i <= 12; i++) {
-        // repeat to calculate mean and sd
-        cout << i << endl;
-        // for (int j = 0; j < 10; j++)
+        cout << "With " << i << " concurrent process(es)" << endl;
         contention(i);
     }
 
+    // delete test files
     for (int i = 0; i < 12; i++) {
         unlink(file_names[i].c_str());
     }
