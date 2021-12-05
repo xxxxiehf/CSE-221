@@ -1,6 +1,8 @@
-#include <unistd.h>
-#include <stdint.h>
 #include <iostream>
+#include <stdint.h>
+#include <unistd.h>
+using namespace std;
+
 #include "time.h"
 
 void system_call_overhead() {
@@ -8,13 +10,14 @@ void system_call_overhead() {
     start = rdtsc_start();
     getpid();
     end = rdtsc_end();
-    std::cout << "The average overhead of one system call is " 
-        << (double)(end - start) << " cycles." << std::endl;
+    cout << "The average overhead of one system call is "
+         << (double)(end - start) << " cycles." << endl;
 }
 
 int main() {
     // try to accelerate iostream
-    std::ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
-    system_call_overhead();
+    for (int i = 0; i < 10; i++)
+        system_call_overhead();
 }
