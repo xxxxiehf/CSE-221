@@ -36,17 +36,18 @@ void socket_tcp_ping(char ip[]) {
     int fd;
     uint64_t receive_size, total_bytes = 0;
     memset(&server, 0, sizeof(server));
+    
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = inet_addr(ip);
     server.sin_port = htons(SERVER_PORT);
 
     if ((fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-        std::cerr << "Fail to create socket" << std::endl;
+        std::cerr << "Fail to create socket~" << std::endl;
         close(fd);
         exit(EXIT_FAILURE);
     }
     if (connect(fd, (struct sockaddr*)&server, sizeof(server)) < 0) {
-        std::cerr << "Fail to connect to socket" << std::endl;
+        std::cerr << "Fail to connect to socket~" << std::endl;
         close(fd);
         exit(EXIT_FAILURE);
     }
