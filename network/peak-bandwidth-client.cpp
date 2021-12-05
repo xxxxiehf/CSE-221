@@ -27,12 +27,12 @@ void peak_bandwidth_client(char ip[]) {
     server.sin_port = htons(SERVER_PORT);
 
     if ((fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-        std::cerr << "Fail to create socket" << std::endl;
+        std::cerr << "Fail to create socket~" << std::endl;
         close(fd);
         exit(EXIT_FAILURE);
     }
     if (connect(fd, (struct sockaddr*)&server, sizeof(server)) < 0) {
-        std::cerr << "Fail to connect to socket" << std::endl;
+        std::cerr << "Fail to connect to socket~" << std::endl;
         close(fd);
         exit(EXIT_FAILURE);
     }
