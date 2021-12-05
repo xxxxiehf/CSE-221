@@ -21,6 +21,7 @@ void peak_bandwidth_client(char ip[]) {
     int fd;
     uint64_t receive_size, total_bytes = 0;
     memset(&server, 0, sizeof(server));
+    
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = inet_addr(ip);
     server.sin_port = htons(SERVER_PORT);
@@ -31,7 +32,7 @@ void peak_bandwidth_client(char ip[]) {
     }
     for (uint64_t k = 0; k < TCP_TEST_NUM; ++k) {
         if ((fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-            std::cerr << "Fail to create socket" << std::endl;
+            std::cerr << "Fail to create socket~" << std::endl;
             close(fd);
             exit(EXIT_FAILURE);
         }
@@ -41,7 +42,7 @@ void peak_bandwidth_client(char ip[]) {
         diff = end - start;
         std::cout << ip << " setup time: " << diff << std::endl;
         if (conn_res < 0) {
-            std::cerr << "Fail to connect to socket" << std::endl;
+            std::cerr << "Fail to connect to socket~" << std::endl;
             close(fd);
             exit(EXIT_FAILURE);
         }
