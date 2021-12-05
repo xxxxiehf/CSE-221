@@ -1,7 +1,7 @@
-#include <iostream>
-#include <cstring>
-#include <cmath>
 #include "time.h"
+#include <cmath>
+#include <cstring>
+#include <iostream>
 using namespace std;
 
 #define REPEAT_TIMES 10
@@ -51,7 +51,7 @@ void ram_write_bandwidth() {
             DOIT(0) DOIT(4) DOIT(8) DOIT(12) DOIT(16) DOIT(20) DOIT(24)
             DOIT(28) DOIT(32) DOIT(36) DOIT(40) DOIT(44) DOIT(48) DOIT(52) 
             DOIT(56) DOIT(60) DOIT(64) DOIT(68) DOIT(72) DOIT(76) DOIT(80) 
-            DOIT(84) DOIT(88) DOIT(92) DOIT(96) DOIT(100) DOIT(104) 
+            DOIT(84) DOIT(88) DOIT(92) DOIT(96) DOIT(100) DOIT(104)
             DOIT(108) DOIT(112) DOIT(116) DOIT(120) DOIT(124);
             cur += 128;
         }
