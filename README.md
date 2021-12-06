@@ -7,6 +7,8 @@ We used Linux (g++) as our environment, all files pass our compilation, but we c
 
 ## Build & Run
 
+Before build, run `mkdir.sh` to create `bin` sub directories.
+
 There is a `Makefile` file in each of sub directory. Use `make all` to compile all files in the same directory. All the executable file will under the sub directory `bin`, just type 
 ```shell
 ./bin/{name of the test}
